@@ -1,0 +1,139 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "joyplace": {
+      "root": "",
+      "sourceRoot": "angular-src",
+      "projectType": "application",
+      "prefix": "",
+      "schematics": {
+        "@schematics/angular:component": {
+          "styleext": "scss"
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/joyplace",
+            "index": "angular-src/index.html",
+            "main": "angular-src/main.ts",
+            "polyfills": "angular-src/polyfills.ts",
+            "tsConfig": "angular-src/tsconfig.app.json",
+            "assets": [
+              "angular-src/favicon.ico",
+              "angular-src/assets"
+            ],
+            "styles": [
+              "angular-src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "angular-src/environments/environment.ts",
+                  "with": "angular-src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "joyplace:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "joyplace:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "joyplace:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "angular-src/test.ts",
+            "polyfills": "angular-src/polyfills.ts",
+            "tsConfig": "angular-src/tsconfig.spec.json",
+            "karmaConfig": "angular-src/karma.conf.js",
+            "styles": [
+              "angular-src/styles.scss"
+            ],
+            "scripts": [],
+            "assets": [
+              "angular-src/favicon.ico",
+              "angular-src/assets"
+            ]
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "angular-src/tsconfig.app.json",
+              "angular-src/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    },
+    "joyplace-e2e": {
+      "root": "e2e/",
+      "projectType": "application",
+      "prefix": "",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "joyplace:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "joyplace:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": "e2e/tsconfig.e2e.json",
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "joyplace"
+}
