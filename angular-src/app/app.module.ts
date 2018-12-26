@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 // services
 import { SocketService } from './services/socket.service'
+import { UserService } from './services/user.service';
 
 @NgModule({
   declarations: [
@@ -14,9 +16,13 @@ import { SocketService } from './services/socket.service'
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    BrowserAnimationsModule
   ],
-  providers: [SocketService],
+  providers: [
+    SocketService,
+    UserService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

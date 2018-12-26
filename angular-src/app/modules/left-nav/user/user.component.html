@@ -1,3 +1,19 @@
-<p>
-  user works!
-</p>
+<mat-card>
+  <div>
+    <mat-icon [color]='"primary"' [inline]="true" style='font-size:50px' (click)='setEdit(!isEditing)'>person</mat-icon>
+    <ng-container *ngIf='!isEditing'>
+      <div (click)='setEdit(true)'>{{userInfo.nickname}}</div>
+    </ng-container>
+    <ng-container *ngIf='isEditing'>
+      <div>
+        <mat-form-field class="w-75" (keyup.enter)='confirm()'>
+          <input matInput placeholder="Your nickname" [(ngModel)]='dispNickname' (keyup.enter)='confirm()'>
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="confirm()">
+            <mat-icon color='accent'>check</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </ng-container>
+    <div>{{userInfo.status}}</div>
+  </div>
+</mat-card>

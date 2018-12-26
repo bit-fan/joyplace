@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as io from 'socket.io-client';
-import { Subject } from 'rxjs';
+import { ReplaySubject, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -8,30 +8,39 @@ import { environment } from '../../environments/environment';
 })
 export class SocketService {
 
-  socket: any;
+  private socket: any;
+  // socket = new ReplaySubject(1);
+  public userEvt = new Subject();
   public socketMsg: any;
   //  = new Subject();
   constructor() {
-    this.socketMsg = new Subject();
+    let socket = io();
+    console.log(socket);
+    // socket.on('message', (data) => {
+    //   console.log("Received message from Websocket Server")
+    //   // observer.next(data);
+    //   // this.socketMsg.next(data);
+    // })
+    socket.on('user', (data) => {
+      console.log('rece user', data);
+      this.userEvt.next(data);
+    });
+    this.socket = socket;
+    // this.socketMsg = new Subject();
   }
+  // getSocket() {
+  //   return this.socket;
+  // }
   disconnect() {
-    this.socket.disconnect();
+    // this.socket.subscribe(obj => {
+    //   obj['disconnect']();
+    // });
   }
-  connect() {
-    this.socket = io();
-    console.log(this.socket);
-    this.socket.on('message', (data) => {
-      console.log("Received message from Websocket Server")
-      // observer.next(data);
-      this.socketMsg.next(data);
-    })
+  emit(key, data, para = {}) {
+    let sendObj = data;
+    if (para) {
+      sendObj = Object.assign({}, { data: data }, para);
+    }
+    this.socket.emit(key, sendObj);
   }
-
-  //   subject.next('missed message from Subject');
-
-  //   subject.subscribe(v => console.log(v));
-
-  // subject.next('hello from subject!');
-
-
 }

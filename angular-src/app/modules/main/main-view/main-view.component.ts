@@ -13,8 +13,7 @@ export class MainViewComponent implements OnInit {
 
   ngOnInit() {
     console.log('ff');
-    this.skt.connect();
-    this.skt.socketMsg.subscribe(data => { console.log(data) });
+    // this.skt.socketMsg.subscribe(data => { console.log(data) });
   }
 
 }
