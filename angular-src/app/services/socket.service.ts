@@ -11,6 +11,7 @@ export class SocketService {
   private socket: any;
   // socket = new ReplaySubject(1);
   public userEvt = new Subject();
+  public gameRoomEvt = new Subject();
   public socketMsg: any;
   //  = new Subject();
   constructor() {
@@ -25,6 +26,11 @@ export class SocketService {
       console.log('rece user', data);
       this.userEvt.next(data);
     });
+    socket.on('gameroom', (data) => {
+
+      console.log('rece gameroom', data);
+      this.gameRoomEvt.next(data);
+    })
     this.socket = socket;
     // this.socketMsg = new Subject();
   }
@@ -36,7 +42,7 @@ export class SocketService {
     //   obj['disconnect']();
     // });
   }
-  emit(key, data, para = {}) {
+  emit(key, data = {}, para = {}) {
     let sendObj = data;
     if (para) {
       sendObj = Object.assign({}, { data: data }, para);

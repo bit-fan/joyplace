@@ -28,19 +28,17 @@ app.use(cookieParser());
 //     res.sendFile('./dist/joyplace/index.html');
 //   }
 // })
-const playerLib = require('./server/lib/player');
-const comUtil = require('./server/lib/commonUtil');
-const managePlayer = require('./server/management/player');
+const comUtil = require('./server/util/commonUtil');
+const playerCtrl=require('./server/controller/players');
 app.use(function (req, res, next) {
   // check if client sent cookie
   var sessionId = req.cookies.sessionId;
   if (!sessionId) {
     // no: set a new cookie
     sessionId = comUtil.generateSessionId(20);
-    while (!managePlayer.isValidNewSessionId(sessionId)) {
+    while (!playerCtrl.isValidNewSessionId(sessionId)) {
       sessionId = comUtil.generateSessionId(20);
     }
-    // playerLib.getNewSessionId();
     // var randomNumber = Math.random().toString();
     // randomNumber = randomNumber.substring(2, randomNumber.length);
 
@@ -170,7 +168,7 @@ function normalizePort(val) {
 }
 
 
-const db = require('./server/lib/mongoUtil');
+const db = require('./server/util/mongoUtil');
 /**
  * Event listener for HTTP server "error" event.
  */

@@ -84,7 +84,7 @@ function normalizePort(val) {
 }
 
 
-const db = require('../server/lib/mongoUtil');
+const db = require('../server/util/mongoUtil');
 /**
  * Event listener for HTTP server "error" event.
  */
